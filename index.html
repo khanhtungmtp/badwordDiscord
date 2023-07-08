@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Xử lý chuỗi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            word-break: break-all;
+            text-align: left;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <label for="inputString">Fuck nitro discord:</label>
+        <img src="img/fuck1.png" alt="">
+        <input type="text" id="inputString">
+        <button onclick="processString()">Xử lý</button>
+        <p id="result"></p>
+        <button id="copyButton" onclick="copyResult()">Sao chép</button>
+
+    </div>
+
+    <script>
+        function processString() {
+            // debugger
+            // Khai báo chuỗi ban đầu
+            const inputElement = document.getElementById("inputString");
+            let a = inputElement.value.toLowerCase();
+            // Khai báo một mảng chứa các từ cấm
+            let bannedWords = ["cu", "cú", "cù", "cũ", "củ", "chim", "bé", "dit", "bd", "bede", "gay", "trí", "lộc", "mông", "ku", "dụ", "chịch", "sex", "bướm", "hoi", "héo", "hiếu", "nhun", "nem", "âu", "hong", "hông", "nam", "nhung", "khum", "vú", "dú"];
+
+            // Khai báo một hàm để thêm dấu chấm vào giữa từ nếu nó nằm trong mảng cấm
+            function addDot(word) {
+                // Duyệt qua mảng các từ cấm
+                for (let i = 0; i < bannedWords.length; i++) {
+                    // Kiểm tra xem từ cấm có nằm trong từ hiện tại không
+                    if (word.includes(bannedWords[i])) {
+                        // Thay thế từ cấm trong từ hiện tại bằng từ có dấu chấm ở giữa
+                        word = word.replace(bannedWords[i], bannedWords[i].slice(0, 1) + "." + bannedWords[i].slice(1));
+                    }
+                }
+                return word;
+            }
+
+
+            // Tách chuỗi ban đầu thành một mảng các từ
+            let words = a.split(" ");
+
+            // Duyệt qua mảng các từ và áp dụng hàm addDot cho mỗi từ
+            let newWords = words.map(addDot);
+
+            // Nối lại mảng các từ thành một chuỗi mới
+            let newA = newWords.join(" ");
+
+            // In ra kết quả
+            document.getElementById('result').textContent = newA;
+        }
+
+        function copyResult() {
+            const resultElement = document.getElementById("result");
+            const range = document.createRange();
+            range.selectNodeContents(resultElement);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            document.execCommand("copy");
+            const copyButton = document.getElementById("copyButton");
+            copyButton.textContent = "Copied";
+        }
+    </script>
+</body>
+
+</html>
