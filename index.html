@@ -71,17 +71,17 @@
             // Khai báo một hàm để thêm dấu chấm vào giữa từ nếu nó nằm trong mảng cấm
             function addDot(word) {
                 // Duyệt qua mảng các từ cấm
-                for (let i = 0; i < bannedWords.length; i++) {
-                    // Kiểm tra xem từ cấm có nằm trong từ hiện tại không
-                    if (word.includes(bannedWords[i])) {
-                        if (word == 'cũng' || word == 'củng' || word == 'cung' || word == 'cùng' || word == 'cụng' || word == 'edit') {
-                            word = "_" + word + "_";
-                        } else
-                            // Thay thế từ cấm trong từ hiện tại bằng từ có dấu chấm ở giữa
-                            word = word.replace(bannedWords[i], "_" + bannedWords[i] + "_");
-                    }
-                }
-                return word;
+                // for (let i = 0; i < bannedWords.length; i++) {
+                //     // Kiểm tra xem từ cấm có nằm trong từ hiện tại không
+                //     if (word.includes(bannedWords[i])) {
+                //         if (word == 'cũng' || word == 'củng' || word == 'cung' || word == 'cùng' || word == 'cụng' || word == 'edit' || word == 'đúng' || word == 'đụng') {
+                //             word = "_" + word + "_";
+                //         } else
+                //             // Thay thế từ cấm trong từ hiện tại bằng từ có dấu chấm ở giữa
+                //             word = word.replace(bannedWords[i], "_" + bannedWords[i] + "_");
+                //     }
+                // }
+                return "_" + word + "_";
             }
 
 
