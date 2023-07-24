@@ -64,8 +64,10 @@
         <img src="img/fuck1.png" alt="">
         <textarea name="" id="inputString" cols="5" rows="5"></textarea>
         <button onclick="processString()">Xử lý</button>
-        <p id="result"></p>
-        <button id="copyButton" onclick="copyResult()">Sao chép</button>
+        <p id="result" style="display: none;"></p>
+        <button id="copyButton" style="display: none;margin: auto;"
+            onclick="copyResult()">Sao chép</button>
+
 
     </div>
 
@@ -94,8 +96,18 @@
             // Nối lại mảng các từ thành một chuỗi mới
             let newA = newWords.join(" ");
 
-            // In ra kết quả
-            document.getElementById('result').textContent = newA;
+            // Kiểm tra nếu newA có dữ liệu thì hiển thị #result và #copyButton, ngược lại ẩn chúng đi
+            const resultElement = document.getElementById("result");
+            const copyButtonElement = document.getElementById("copyButton");
+
+            if (newA) {
+                resultElement.textContent = newA;
+                resultElement.style.display = "block";
+                copyButtonElement.style.display = "block";
+            } else {
+                resultElement.style.display = "none";
+                copyButtonElement.style.display = "none";
+            }
         }
 
         function copyResult() {
