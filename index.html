@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    <title>Xử lý chuỗi</title>
+    <title>Xử lý chuỗi Discord</title>
+    <link rel="shortcut icon" type="image/png" href="img/fuck1.png" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,7 +38,16 @@
             background-color: #45a049;
         }
 
+        textarea {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+            resize: vertical;
+            font-size: 16px;
+        }
+
         #result {
+            width: 390px;
             margin-top: 20px;
             padding: 10px;
             border: 1px solid #ddd;
@@ -50,9 +60,9 @@
 
 <body>
     <div class="container">
-        <label for="inputString">Fuck nitro discord:</label>
+        <label for="inputString">Xử lý chuỗi discord:</label>
         <img src="img/fuck1.png" alt="">
-        <input type="text" id="inputString">
+        <textarea name="" id="inputString" cols="5" rows="5"></textarea>
         <button onclick="processString()">Xử lý</button>
         <p id="result"></p>
         <button id="copyButton" onclick="copyResult()">Sao chép</button>
@@ -71,7 +81,7 @@
 
             // Khai báo một hàm để thêm dấu chấm vào giữa từ nếu nó nằm trong mảng cấm
             function addDot(word) {
-                return "_" + word + "_";
+                return word ? "_" + word + "_" : '';
             }
 
 
