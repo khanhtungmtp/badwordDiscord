@@ -55,6 +55,13 @@
             text-align: left;
             white-space: pre-line;
         }
+
+        /* Highlight các từ trong bannedWords */
+        .highlight {
+            background-color: lightblue;
+            padding: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
 
@@ -64,51 +71,102 @@
         <img src="img/fuck1.png" alt="">
         <textarea name="" id="inputString" cols="5" rows="5"></textarea>
         <button onclick="processString()">Xử lý</button>
+
+        <p id="result1" style="display: none;"></p>
         <p id="result" style="display: none;"></p>
         <button id="copyButton" style="display: none;margin: auto;"
             onclick="copyResult()">Sao chép</button>
 
 
     </div>
-
     <script>
         function processString() {
             const copyButton = document.getElementById("copyButton");
             copyButton.textContent = "Sao chép";
+            // debugger
             // Khai báo chuỗi ban đầu
             const inputElement = document.getElementById("inputString");
-            let a = inputElement.value;
+            let userInput = inputElement.value.toLowerCase();
             // Khai báo một mảng chứa các từ cấm
-            let bannedWords = ["cu", "cú", "cù", "cũ", "củ", "chim", "bé", "dit", "bd", "bede", "gay", "trí", "lộc", "mông", "ku", "dụ", "chịch", "sex", "bướm", "hoi", "héo", "hiếu", "nhun", "nem", "âu", "hong", "hông", "nam", "nhung", "khum", "vú", "dú"];
+            let bannedWords = ["các", "lồn", "lộn", "lỗ", "cu", "cú", "cù", "cũ", "củ", "cụ", "chim", "bé", "dit", "bd", "bede", "gay", "trí", "lộc", "mông", "ku", "chịch", "sex", "bướm", "hoi", "héo", "hiếu", "nhun", "nem", "âu", "hong", "hông", "hồng", "hỏng", "họng", "hóng", "nam", "nhung", "khum", "vú", "dú", "dù", "dụ"];
 
-            // Khai báo một hàm để thêm dấu chấm vào giữa từ nếu nó nằm trong mảng cấm
-            function addDot(word) {
-                return word ? "_" + word + "_" : '';
+            // Hàm viết hoa chữ cái đầu của tên và giữ lại dấu chấm nếu có
+            function capitalizeFirstLetter(word) {
+                // Kiểm tra xem từ cấm có nằm trong từ hiện tại không
+                for (let i = 0; i < bannedWords.length; i++) {
+                    if (word.includes(bannedWords[i])) {
+                        // Thay thế từ cấm trong từ hiện tại bằng từ có dấu chấm ở giữa
+                        word = word.replace(bannedWords[i], bannedWords[i].slice(0, 1) + "." + bannedWords[i].slice(1));
+                    }
+                }
+                // Viết hoa chữ cái đầu
+                return word.charAt(0).toUpperCase() + word.slice(1);
             }
 
+            function addDot(word) {
+                // Duyệt qua mảng các từ cấm
+                for (let i = 0; i < bannedWords.length; i++) {
+                    // Kiểm tra xem từ cấm có nằm trong từ hiện tại không
+                    if (word.includes(bannedWords[i])) {
+                        // Thay thế từ cấm trong từ hiện tại bằng từ có dấu chấm ở giữa
+                        word = word.replace(bannedWords[i], bannedWords[i].slice(0, 1) + "." + bannedWords[i].slice(1));
+                    }
+                }
+                return word;
+            }
 
             // Tách chuỗi ban đầu thành một mảng các từ
-            let words = a.split(" ");
+            let words = userInput.split(" ");
 
             // Duyệt qua mảng các từ và áp dụng hàm addDot cho mỗi từ
-            let newWords = words.map(addDot);
+            let newWords = words.map(word => {
+                // Nếu từ là một trong các tên cần viết hoa chữ cái đầu, thì viết hoa nó
+                if (["lộc", "trí", "nam", "hào", "khải", "hải", "phíu", "phú"].includes(word)) {
+                    return capitalizeFirstLetter(word);
+                } else {
+                    return addDot(word);
+                }
+            });
 
             // Nối lại mảng các từ thành một chuỗi mới
-            let newA = newWords.join(" ");
+            let chuoiDaXuLy = newWords.join(" ");
+            // highlight
+            // Chia chuỗi thành từng ký tự riêng lẻ
+            const chars1 = userInput.split(" ");
+            const chars2 = chuoiDaXuLy.split(" ");
 
-            // Kiểm tra nếu newA có dữ liệu thì hiển thị #result và #copyButton, ngược lại ẩn chúng đi
+            let resultHtml = "";
+
+            // So sánh từng ký tự trong hai chuỗi
+            for (let i = 0; i < chars1.length; i++) {
+                if (chars1[i] !== chars2[i]) {
+                    resultHtml += `<span class="highlight"> ${chars2[i]} </span>`;
+                } else {
+                    resultHtml += " " + chars1[i] + " ";
+                }
+            }
+
+            //  console.log('goc:', userInputGoc);
+            console.log('da xu ly:', chuoiDaXuLy);
+            // In ra kết quả
+            // Kiểm tra nếu chuoiDaXuLy có dữ liệu thì hiển thị #result và #copyButton, ngược lại ẩn chúng đi
             const resultElement = document.getElementById("result");
+            const resultElement1 = document.getElementById("result1");
             const copyButtonElement = document.getElementById("copyButton");
 
-            if (newA) {
-                resultElement.textContent = newA;
+            if (chuoiDaXuLy) {
+                resultElement.textContent = chuoiDaXuLy;
+                resultElement1.innerHTML = resultHtml.trim();
+                resultElement1.style.display = "block";
                 resultElement.style.display = "block";
                 copyButtonElement.style.display = "block";
             } else {
                 resultElement.style.display = "none";
+                resultElement1.style.display = "none";
                 copyButtonElement.style.display = "none";
             }
         }
+
 
         function copyResult() {
             const resultElement = document.getElementById("result");
