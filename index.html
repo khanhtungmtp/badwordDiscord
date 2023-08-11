@@ -88,7 +88,10 @@
             const inputElement = document.getElementById("inputString");
             let userInput = inputElement.value.toLowerCase();
             // Khai báo một mảng chứa các từ cấm
-            let bannedWords = ["các", "lồn", "lộn", "lỗ", "cu", "cú", "cù", "cũ", "củ", "cụ", "chim", "bé", "dit", "bd", "bede", "gay", "trí", "lộc", "mông", "ku", "chịch", "sex", "bướm", "hoi", "héo", "hiếu", "nhun", "nem", "âu", "hong", "hông", "hồng", "hỏng", "họng", "hóng", "nam", "nhung", "khum", "vú", "dú", "dù", "dụ"];
+            let bannedWords = ["các", "lồn", "lộn", "lỗ", "cu", "cú", "cù", "cũ", "củ", "cụ", "chim", "bé",
+                "dit", "bd", "bede", "gay", "trí", "lộc", "mông", "ku", "chịch", "sex", "bướm", "hoi", "héo", "hiếu",
+                "nhun", "nem", "âu", "hong", "hông", "hồng", "hỏng", "họng", "hóng", "nam", "nhung", "khum", "vú", "dú", "dù", "dụ"
+                , "mu", "mù", "mú", "mủ", "mũ", "mụ", "khải", "hải", "ting", "lúa", "nghe", "ngu", "ngư", "hen", "tùng", "khai", "shao", "he"];
 
             // Hàm viết hoa chữ cái đầu của tên và giữ lại dấu chấm nếu có
             function capitalizeFirstLetter(word) {
@@ -121,7 +124,7 @@
             // Duyệt qua mảng các từ và áp dụng hàm addDot cho mỗi từ
             let newWords = words.map(word => {
                 // Nếu từ là một trong các tên cần viết hoa chữ cái đầu, thì viết hoa nó
-                if (["lộc", "trí", "nam", "hào", "khải", "hải", "phíu", "phú"].includes(word)) {
+                if (["lộc", "trí", "nam", "hào", "khải", "hải", "phíu", "phú", "tùng"].includes(word)) {
                     return capitalizeFirstLetter(word);
                 } else {
                     return addDot(word);
